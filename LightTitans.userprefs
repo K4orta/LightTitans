@@ -1,0 +1,28 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Logic.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Title.cs" Line="85" Column="62" />
+      <File FileName="Assets\Scripts\Units\Titan.cs" Line="140" Column="25" />
+      <File FileName="Assets\Scripts\Logic.cs" Line="122" Column="9" />
+      <File FileName="Assets\Scripts\HUD.cs" Line="74" Column="25" />
+      <File FileName="Assets\Scripts\Player.cs" Line="171" Column="114" />
+      <File FileName="Assets\Scripts\Unit.cs" Line="143" Column="35" />
+      <File FileName="Assets\Scripts\TankSpawner.cs" Line="17" Column="33" />
+      <File FileName="Assets\Scripts\LandingSite.cs" Line="10" Column="28" />
+      <File FileName="Assets\Scripts\Units\TankStandin.cs" Line="9" Column="32" />
+      <File FileName="Assets\Scripts\Projectiles\TitanShot.cs" Line="13" Column="2" />
+      <File FileName="Assets\Scripts\BasicProjectile.cs" Line="23" Column="3" />
+      <File FileName="Assets\Scripts\Projectiles\PlayerRocket.cs" Line="34" Column="28" />
+      <File FileName="Assets\Scripts\Units\Sam.cs" Line="19" Column="10" />
+      <File FileName="Assets\Scripts\Tutorial.cs" Line="39" Column="26" />
+      <File FileName="Assets\Scripts\Units\Tank.cs" Line="151" Column="3" />
+      <File FileName="Assets\Scripts\Projectiles\TankShot.cs" Line="17" Column="5" />
+      <File FileName="Assets\Scripts\BuildingSegment.cs" Line="22" Column="42" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
