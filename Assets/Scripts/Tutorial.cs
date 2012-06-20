@@ -18,7 +18,6 @@ public class Tutorial : MonoBehaviour {
 	}
 	
 	
-	
 	void OnGUI(){
 		if(tutorialActive&&Time.timeScale==1){
 			GUI.skin = tutorialSkin;

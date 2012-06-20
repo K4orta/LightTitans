@@ -38,7 +38,12 @@ public class Player : Unit {
 	
 	public AudioClip shotSound;
 	public AudioClip winddown;
-	
+	public Controls controlSetup; 
+
+	public enum Controls{
+		Simple,
+		Advanced
+	}
 	
 
 	// Use this for initialization
@@ -50,6 +55,7 @@ public class Player : Unit {
 		armor = 20;
 		SetOwner(Unit.Side.Player);
 		Logic.Playstate.playerUnits.Add (this);
+		controlSetup = Controls.Simple;
 	}
 	
 	// Update is called once per frame
@@ -167,37 +173,11 @@ public class Player : Unit {
 	
 	void FixedUpdate(){
 			
-		rigidbody.AddRelativeTorque(new Vector3(0, 0, Input.GetAxis("Mouse X") * sensitivityX * rotorRPM * Time.deltaTime * 58 * invertX));
-		rigidbody.AddRelativeTorque(new Vector3(Input.GetAxis("Mouse Y") * sensitivityY * Time.deltaTime * 58 * invertY,0, 0));
-
-		rigidbody.AddRelativeTorque(new Vector3(0,Input.GetAxis("Horizontal") * sensitivityX*-1* Time.deltaTime * 58, 0));
-		
 		xTip = (transform.eulerAngles.x-180<0?transform.eulerAngles.x-180+180:transform.eulerAngles.x-180-180);
 		zTip = (transform.eulerAngles.z-180<0?transform.eulerAngles.z-180+180:transform.eulerAngles.z-180-180);
 			
-		rigidbody.AddForce(new Vector3(transform.forward.x, 0 , transform.forward.z)*2f*xTip);
-		rigidbody.AddForce(new Vector3(transform.right.x, 0 , transform.right.z)*-2f*zTip);
-		//rigidbody.AddForce(transform.forward*20);
-		
-		if(Input.GetKey(KeyCode.W)){
-			rotorRPM = Mathf.Clamp(rotorRPM+.5f*Time.deltaTime,0,1);
-			if(xTip>10){
-				rigidbody.AddForce(new Vector3(transform.forward.x, 0 , transform.forward.z)*5f*xTip);
-				rigidbody.AddRelativeForce(Vector3.up*15* Time.deltaTime * 58);
-			}else{
-				rigidbody.AddRelativeForce(Vector3.up*38 * Time.deltaTime * 58);
-			}
-		}
 
-		if(Input.GetKey(KeyCode.LeftShift)){
-			rigidbody.AddRelativeForce(Vector3.forward*400* Time.deltaTime * 58);	
-		}
-		
-		if(Input.GetKey (KeyCode.S)){
-			rigidbody.AddRelativeForce(Vector3.up*-38* Time.deltaTime * 58);	
-		}else{
-			rigidbody.AddRelativeForce(Vector3.up*28*rotorRPM* Time.deltaTime * 58);		
-		}	
+		doControls(controlSetup);
 	}
 	
 	public override void Hurt (float Damage){
@@ -219,4 +199,92 @@ public class Player : Unit {
 		
 		rotorRPM = 0;
 	} 
+
+	protected void doControls(Controls CurCon){
+		switch(CurCon){
+			case Controls.Simple:
+					SimpleControls();
+				break;
+			case Controls.Advanced:
+					AdvancedControls();
+				break;
+			default:
+				break;
+		}
+	}
+
+	protected void autoLevel(){
+		if(Mathf.Abs(zTip)>2){
+			rigidbody.AddRelativeTorque(new Vector3(0, 0, -zTip*.45f));
+		}
+	}
+
+	protected void SimpleControls(){
+		//rigidbody.AddRelativeTorque(new Vector3(0, 0, Input.GetAxis("Mouse X") * sensitivityX * rotorRPM * Time.deltaTime * invertX));
+		//rigidbody.AddRelativeTorque(new Vector3(Input.GetAxis("Mouse Y") * sensitivityY * Time.deltaTime * 58 * invertY,0, 0));
+		rigidbody.angularDrag = 2;
+		rigidbody.AddRelativeTorque(new Vector3(0, Input.GetAxis("Mouse X") * -sensitivityX * rotorRPM * Time.deltaTime * 60 * invertX), 0);
+		rigidbody.AddRelativeTorque(new Vector3(Input.GetAxis("Mouse Y") * sensitivityY * Time.deltaTime * 58 * invertY,0, 0));
+		
+		rigidbody.AddRelativeTorque(new Vector3(0, 0, Input.GetAxis("Horizontal") * sensitivityX * Time.deltaTime * 30));
+		autoLevel();
+
+		if(Input.GetKey(KeyCode.LeftShift)){
+			rigidbody.AddRelativeForce(Vector3.forward*400* Time.deltaTime * 58);	
+		}
+
+		if(Input.GetKey(KeyCode.W)){
+				rotorRPM = Mathf.Clamp(rotorRPM+.5f*Time.deltaTime,0,1);
+				if(xTip>10){
+					rigidbody.AddForce(new Vector3(transform.forward.x, 0 , transform.forward.z)*5f*xTip);
+					if(xTip>20){
+						rigidbody.AddRelativeForce(Vector3.up*-15* Time.deltaTime * 58);
+					}
+				}else{
+					rigidbody.AddRelativeForce(Vector3.up*38 * Time.deltaTime * 58);
+				}
+			}
+
+		if(Input.GetKey (KeyCode.S)){
+			rigidbody.AddRelativeForce(Vector3.up*-38* Time.deltaTime * 58);	
+		}else{
+			rigidbody.AddRelativeForce(Vector3.up*28*rotorRPM* Time.deltaTime * 58);		
+		}
+
+		if(Mathf.Abs(Input.GetAxis("Horizontal"))>.4f){
+			rigidbody.AddForce(new Vector3(transform.right.x, 0 , transform.right.z)*-3f*zTip);
+		}
+	}
+
+	
+
+	protected void AdvancedControls(){
+		rigidbody.AddRelativeTorque(new Vector3(0, 0, Input.GetAxis("Mouse X") * sensitivityX * rotorRPM * Time.deltaTime * 58 * invertX));
+		rigidbody.AddRelativeTorque(new Vector3(Input.GetAxis("Mouse Y") * sensitivityY * Time.deltaTime * 58 * invertY,0, 0));
+
+		rigidbody.AddRelativeTorque(new Vector3(0,Input.GetAxis("Horizontal") * sensitivityX*-1* Time.deltaTime * 58, 0));
+		
+		rigidbody.AddForce(new Vector3(transform.forward.x, 0 , transform.forward.z)*2f*xTip);
+		rigidbody.AddForce(new Vector3(transform.right.x, 0 , transform.right.z)*-2f*zTip);
+		
+		if(Input.GetKey(KeyCode.W)){
+			rotorRPM = Mathf.Clamp(rotorRPM+.5f*Time.deltaTime,0,1);
+			if(xTip>10){
+				rigidbody.AddForce(new Vector3(transform.forward.x, 0 , transform.forward.z)*5f*xTip);
+				rigidbody.AddRelativeForce(Vector3.up*15* Time.deltaTime * 58);
+			}else{
+				rigidbody.AddRelativeForce(Vector3.up*38 * Time.deltaTime * 58);
+			}
+		}
+
+		if(Input.GetKey(KeyCode.LeftShift)){
+			rigidbody.AddRelativeForce(Vector3.forward*400* Time.deltaTime * 58);	
+		}
+		
+		if(Input.GetKey (KeyCode.S)){
+			rigidbody.AddRelativeForce(Vector3.up*-38* Time.deltaTime * 58);	
+		}else{
+			rigidbody.AddRelativeForce(Vector3.up*28*rotorRPM* Time.deltaTime * 58);		
+		}
+	}
 }
