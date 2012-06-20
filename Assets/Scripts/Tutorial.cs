@@ -27,13 +27,13 @@ public class Tutorial : MonoBehaviour {
 						GUI.Label(new Rect(Screen.width*.5f-200, Screen.height*.5f+80, 400, 80), "Hold W to gain altitude. When not holding W you will hover");
 						break;
 					case 1:
-						GUI.Label(new Rect(Screen.width*.5f-200, Screen.height*.5f+80, 400, 80), "Slide the mouse forward gently to move forward");
+						GUI.Label(new Rect(Screen.width*.5f-200, Screen.height*.5f+80, 400, 80), "Slide the mouse forward while holding W to move forward");
 						break;
 					case 2:
-						GUI.Label(new Rect(Screen.width*.5f-200, Screen.height*.5f+80, 400, 80), "Gently move the mouse left and right to roll");
+						GUI.Label(new Rect(Screen.width*.5f-200, Screen.height*.5f+80, 400, 80), "Move the mouse left and right to turn");
 						break;
 					case 3:
-						GUI.Label(new Rect(Screen.width*.5f-200, Screen.height*.5f+80, 400, 80), "Press A or D to rotate left or right");
+						GUI.Label(new Rect(Screen.width*.5f-200, Screen.height*.5f+80, 400, 80), "Press A or D to strafe left or right");
 						break;
 					case 4:
 						GUI.Label(new Rect(Screen.width*.5f-200, Screen.height*.5f+80, 400, 80), "Press Mouse 1 to fire");
@@ -74,14 +74,18 @@ public class Tutorial : MonoBehaviour {
 			if(player.xTip>25 && wStep <=0 || player.xTip>50){
 				currentStep++;
 				gap = .5f;
+				wStep = 2.5f;
 			}
 			wStep-=Time.deltaTime;
 		}else if(currentStep==2){
-			if(Mathf.Abs(player.zTip)>30){
+			
+			if(wStep<=0){
 				currentStep++;
 				gap = .2f;
 				wStep=2f;
+				
 			}
+			wStep-=Time.deltaTime;
 		}else if(currentStep==3){
 			if(wStep<=0){
 				currentStep++;
@@ -98,7 +102,7 @@ public class Tutorial : MonoBehaviour {
 		}else if(currentStep==5){
 			if(Input.GetMouseButtonDown(1)){
 				currentStep++;
-				wStep = 1f;
+				wStep = .5f;
 				gap = .25f;
 			}
 			wStep-=Time.deltaTime;

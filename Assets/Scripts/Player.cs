@@ -236,8 +236,8 @@ public class Player : Unit {
 		if(Input.GetKey(KeyCode.W)){
 				rotorRPM = Mathf.Clamp(rotorRPM+.5f*Time.deltaTime,0,1);
 				if(xTip>10){
-					rigidbody.AddForce(new Vector3(transform.forward.x, 0 , transform.forward.z)*5f*xTip);
-					if(xTip>20){
+					rigidbody.AddForce(new Vector3(transform.forward.x, 0 , transform.forward.z)*5.5f*xTip);
+					if(xTip>30){
 						rigidbody.AddRelativeForce(Vector3.up*-15* Time.deltaTime * 58);
 					}
 				}else{
@@ -252,7 +252,7 @@ public class Player : Unit {
 		}
 
 		if(Mathf.Abs(Input.GetAxis("Horizontal"))>.4f){
-			rigidbody.AddForce(new Vector3(transform.right.x, 0 , transform.right.z)*-3f*zTip);
+			rigidbody.AddForce(new Vector3(transform.right.x, 0 , transform.right.z)*-4f*zTip);
 		}
 	}
 
