@@ -9,8 +9,8 @@ public class Player : Unit {
 	public float xTip = 0;
 	public float zTip = 0;
 	public float rotorRPM = 0; 
-	public int invertX=0;
-	public int invertY=0;
+	public int invertX=1;
+	public int invertY=1;
 	
 	// weapon payload
 	protected float cannonHeat = 0;
@@ -55,7 +55,7 @@ public class Player : Unit {
 		armor = 20;
 		SetOwner(Unit.Side.Player);
 		Logic.Playstate.playerUnits.Add (this);
-		controlSetup = Controls.Simple;
+		controlSetup = Controls.Advanced;
 	}
 	
 	// Update is called once per frame
@@ -89,6 +89,7 @@ public class Player : Unit {
 			rocketReloadTimer = rocketReloadTime;
 			rocketsInPod = 0;
 		}
+		
 		
 		if(Input.GetMouseButtonUp(0)&&rotorRPM>0){
 			logic.AudioAt(winddown,transform.position,1,200,0);
@@ -176,7 +177,6 @@ public class Player : Unit {
 		xTip = (transform.eulerAngles.x-180<0?transform.eulerAngles.x-180+180:transform.eulerAngles.x-180-180);
 		zTip = (transform.eulerAngles.z-180<0?transform.eulerAngles.z-180+180:transform.eulerAngles.z-180-180);
 			
-
 		doControls(controlSetup);
 	}
 	
@@ -254,6 +254,7 @@ public class Player : Unit {
 		if(Mathf.Abs(Input.GetAxis("Horizontal"))>.4f){
 			rigidbody.AddForce(new Vector3(transform.right.x, 0 , transform.right.z)*-4f*zTip);
 		}
+		Debug.Log("Ho!");
 	}
 
 	

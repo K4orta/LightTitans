@@ -28,9 +28,10 @@ public class Tank : Unit {
 		Navigator nav = GetComponent<Navigator> ();
 		nav.RegisterWeightHandler ("Water", OnHandleWaterWeight);
 		topSpeed = 80;
-		cannonRPM = 230;
+		cannonRPM = 600;
 		cannonSpread =2;
 		eyes = Vector3.up*2;
+		cannonMagazine=8;
 		//rigidbody.centerOfMass = new Vector3(0,-3,0);
 		//moveTar = GameObject.Find("Waypoint1").transform.position;
 		//iTween.MoveTo(gameObject, iTween.Hash("position", wp1, "speed", 10f));
@@ -103,7 +104,12 @@ public class Tank : Unit {
 				if(LOS(attTar)){
 					FireCannon(curCannon);
 					curCannon = !curCannon;
-					cannonCooldown = 60/cannonRPM; 
+					if(--cannonMagazine<=0){
+						cannonCooldown = cannonReload;
+						cannonMagazine = 12;
+					}else{
+						cannonCooldown = 60/cannonRPM;
+					}
 				}else{
 					attTar=null;
 				}

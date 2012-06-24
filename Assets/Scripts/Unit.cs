@@ -29,6 +29,8 @@ public class Unit : Entity {
 	protected bool curCannon = false;
 	protected float cannonCooldown = 0;
 	protected float cannonSpread = 5;
+	protected float cannonReload = 1.6f;
+	protected float cannonMagazine = 8;
 	
 	public float lockTime=3;
 	public float lockTimer=0; 

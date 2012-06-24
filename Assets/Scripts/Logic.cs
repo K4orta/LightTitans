@@ -51,7 +51,7 @@ public class Logic : MonoBehaviour {
 	}
 	
 	void Start () {
-		Time.timeScale=0;
+		Time.timeScale=1;
 		Playstate=this;
 		curSel = GameObject.Find("PlayerCopter").GetComponent<Player>();
 		
@@ -74,6 +74,7 @@ public class Logic : MonoBehaviour {
 		Physics.IgnoreLayerCollision(10,15);
 		Physics.IgnoreLayerCollision(9,15);
 		
+		AudioListener.volume = .1f;
 	}
 	
 	public void NewGame(){
